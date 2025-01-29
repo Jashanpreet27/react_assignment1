@@ -48,17 +48,13 @@ function App() {
   console.log('Blog:', blog);
 
   const handlefav = useCallback((id,value) => {
-    // setBlog((prevPosts) => {
-    //   const predata=[...prevPosts];
-    //   const bl=predata.find((data) => data.id === id);
-    //   b1[id]=value;
-
-    // });
-    blog.map((data)=>{
-      if(data.id === id){
-        return {...data,favorite:value}
-        
-      }
+    setBlog((prevPosts) => {
+      const updatedPosts = prevPosts.map((post) =>
+        post.id === id ? { ...post, favorite: value } : post
+      );
+    
+    localStorage.setItem('posts', JSON.stringify(updatedPosts)); // Persist updated list to localStorage
+    return updatedPosts;
     })
 
   }, []);
